@@ -25,4 +25,7 @@ public:
 
 
     void update() noexcept override;
+
+
+    Texture* target_texture() noexcept override { return &texture.value; }
 };

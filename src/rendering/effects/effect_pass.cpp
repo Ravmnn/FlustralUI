@@ -3,18 +3,14 @@
 
 
 
-Texture EffectPass::apply(const Texture& texture) noexcept
+RenderTexture EffectPass::apply(const Texture& texture) noexcept
 {
-    initialize_texture_buffer(texture);
-    draw_texture_to_buffer_with_effect(texture);
+    const RenderTexture render_texture = LoadRenderTexture(texture.width, texture.height);
 
-    return _texture_buffer->texture;
-}
+    if (set_effect_target_texture_when_apply)
+        *_effect->target_texture() = texture;
 
-
-void EffectPass::draw_texture_to_buffer_with_effect(const Texture &texture)
-{
-    BeginTextureMode(*_texture_buffer);
+    BeginTextureMode(render_texture);
         BeginShaderMode(*_effect->shader());
         _effect->update();
 
@@ -22,13 +18,6 @@ void EffectPass::draw_texture_to_buffer_with_effect(const Texture &texture)
 
         EndShaderMode();
     EndTextureMode();
-}
 
-
-void EffectPass::initialize_texture_buffer(const Texture& texture) noexcept
-{
-    if (_texture_buffer)
-        UnloadRenderTexture(*_texture_buffer);
-
-    _texture_buffer = std::make_unique<RenderTexture>(LoadRenderTexture(texture.width, texture.height));
+    return render_texture;
 }

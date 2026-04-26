@@ -21,4 +21,7 @@ public:
 
 
     Shader* shader() const noexcept { return _shader.get(); };
+
+
+    virtual Texture* target_texture() noexcept = 0;
 };

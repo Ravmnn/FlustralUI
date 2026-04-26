@@ -13,10 +13,12 @@ class EffectPass : Updateable
 {
 private:
     std::unique_ptr<Effect> _effect;
-    std::unique_ptr<RenderTexture> _texture_buffer;
 
 
 public:
+    bool set_effect_target_texture_when_apply = true;
+
+
     explicit EffectPass(std::unique_ptr<Effect> effect) noexcept
         : _effect(std::move(effect)) {}
 
@@ -24,13 +26,8 @@ public:
     void update() noexcept override { _effect->update(); }
 
 
-    Texture apply(const Texture &texture) noexcept;
+    RenderTexture apply(const Texture& texture) noexcept;
 
 
     Effect* effect() noexcept { return _effect.get(); }
-
-
-private:
-    void initialize_texture_buffer(const Texture& texture) noexcept;
-    void draw_texture_to_buffer_with_effect(const Texture &texture);
 };

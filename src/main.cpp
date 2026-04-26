@@ -8,6 +8,8 @@
 
 int main()
 {
+    SetTraceLogLevel(LOG_WARNING);
+
     int monitor = GetCurrentMonitor();
     SetConfigFlags(FLAG_FULLSCREEN_MODE);
     InitWindow(GetMonitorWidth(monitor), GetMonitorHeight(monitor), "Fluid Crystal UI");

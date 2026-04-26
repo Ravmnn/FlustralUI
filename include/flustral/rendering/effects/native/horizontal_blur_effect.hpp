@@ -12,8 +12,8 @@ public:
     HorizontalBlurEffect()
         : BlurEffect(std::make_unique<Shader>(LoadShaderFromMemory(nullptr, NativeShaders::HorizontalBlurShader)),
             Vector2{ (float)GetScreenWidth(), (float)GetScreenHeight() },
-            8,
-            4
+            6,
+            3
         )
     {}
 };

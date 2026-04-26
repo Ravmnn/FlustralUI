@@ -3,6 +3,7 @@
 #include <flustral/drawable.hpp>
 #include <flustral/rendering/effects/native/horizontal_blur_effect.hpp>
 #include <flustral/rendering/effects/native/vertical_blur_effect.hpp>
+#include <flustral/texture_sample.hpp>
 
 
 
@@ -34,18 +35,26 @@ void Scene::draw() noexcept
 {
     for (auto& layer : layers)
     {
-        Texture texture = layer->draw_and_get();
+        constexpr float DownSamplingFactor = 2.0f;
 
-        _horizontal_blur->texture.value = texture;
-        _vertical_blur->texture.value = texture;
+        const RenderTexture down_sampled = TextureSample::down_sample(layer->draw_and_get(), DownSamplingFactor);
+        const Vector2 resolution = { (float)down_sampled.texture.width, (float)down_sampled.texture.height };
 
-        texture = _horizontal_blur_pass.apply(texture);
-        texture = _vertical_blur_pass.apply(texture);
+        _horizontal_blur->resolution.value = resolution;
+        _vertical_blur->resolution.value = resolution;
+
+        const RenderTexture horizontal_blurred = _horizontal_blur_pass.apply(down_sampled.texture);
+        const RenderTexture vertical_blurred = _vertical_blur_pass.apply(horizontal_blurred.texture);
+        const RenderTexture up_sampled = TextureSample::up_sample(vertical_blurred.texture, DownSamplingFactor);
 
         _window_renderer.begin_render();
-        const Rectangle source = Rectangle{ 0, 0, texture.width, -texture.height };
-        DrawTextureRec(texture, source, { 0, 0 }, WHITE);
+        DrawTextureRec(up_sampled.texture, { 0, 0, (float)up_sampled.texture.width, (float)-up_sampled.texture.height }, {}, WHITE);
         _window_renderer.end_render();
+
+        UnloadRenderTexture(horizontal_blurred);
+        UnloadRenderTexture(vertical_blurred);
+        UnloadRenderTexture(down_sampled);
+        UnloadRenderTexture(up_sampled);
 
         break;
     }
