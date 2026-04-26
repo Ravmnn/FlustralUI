@@ -9,11 +9,11 @@
 class HorizontalBlurEffect : public BlurEffect
 {
 public:
-    HorizontalBlurEffect()
+    HorizontalBlurEffect(const int samples, const float sigma) noexcept
         : BlurEffect(std::make_unique<Shader>(LoadShaderFromMemory(nullptr, NativeShaders::HorizontalBlurShader)),
             Vector2{ (float)GetScreenWidth(), (float)GetScreenHeight() },
-            6,
-            3
+            samples,
+            sigma
         )
     {}
 };

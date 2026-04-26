@@ -28,4 +28,5 @@ public:
 
 
     Texture* target_texture() noexcept override { return &texture.value; }
+    Vector2* target_texture_resolution() noexcept override { return &resolution.value; }
 };

@@ -9,11 +9,11 @@
 class VerticalBlurEffect : public BlurEffect
 {
 public:
-    VerticalBlurEffect()
+    VerticalBlurEffect(const int samples, const float sigma)
         : BlurEffect(std::make_unique<Shader>(LoadShaderFromMemory(nullptr, NativeShaders::VerticalBlurShader)),
             Vector2{ (float)GetScreenWidth(), (float)GetScreenHeight() },
-            6,
-            3
+            samples,
+            sigma
         )
     {}
 };

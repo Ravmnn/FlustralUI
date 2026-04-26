@@ -24,4 +24,5 @@ public:
 
 
     virtual Texture* target_texture() noexcept = 0;
+    virtual Vector2* target_texture_resolution() noexcept = 0;
 };

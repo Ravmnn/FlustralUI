@@ -1,4 +1,4 @@
-sources = files('blur_effect.cpp', 'native_shaders.cpp')
+sources = files('blur_effect.cpp', 'native_shaders.cpp', 'gaussian_blur_effect_pass.cpp')
 
 native_lib = static_library('native', sources,
     dependencies: global_deps

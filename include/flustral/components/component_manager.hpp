@@ -18,6 +18,7 @@ public:
 
 
     explicit ComponentManager(std::unique_ptr<Renderer> renderer) noexcept;
+    virtual ~ComponentManager() = default;
 
 
     void update() noexcept override;

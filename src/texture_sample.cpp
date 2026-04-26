@@ -11,6 +11,7 @@ RenderTexture TextureSample::down_sample(const Texture& source, const float fact
         const Rectangle source_rect = Rectangle { 0, 0, source.width, source.height };
         const Rectangle destination = Rectangle { 0, 0, render_texture.texture.width, render_texture.texture.height };
 
+        SetTextureFilter(source, TEXTURE_FILTER_BILINEAR);
         DrawTexturePro(source, source_rect, destination, {}, 0, WHITE);
     EndTextureMode();
 

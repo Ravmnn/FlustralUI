@@ -51,5 +51,5 @@ void WindowRenderer::draw_y_inverted_contents() const noexcept
 {
     const Texture texture = contents();
     const Rectangle source = Rectangle{ 0, 0, texture.width, -texture.height };
-    DrawTextureRec(texture, source, { 0, 0 }, WHITE);
+    DrawTextureRec(texture, source, {}, WHITE);
 }
