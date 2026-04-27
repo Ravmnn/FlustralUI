@@ -9,11 +9,12 @@
 class BlurEffect : public Effect
 {
 public:
+    EffectProperty<Texture> texture;
     EffectProperty<Vector2> resolution;
+
     EffectProperty<int> samples;
     EffectProperty<float> sigma;
 
-    EffectProperty<Texture> texture;
 
 
     BlurEffect(

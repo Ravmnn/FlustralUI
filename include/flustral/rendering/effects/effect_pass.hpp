@@ -14,7 +14,7 @@ class EffectPass : public Updateable
 // TODO: use "field_" project wide
 
 protected:
-    std::unique_ptr<Effect> _effect;
+    Effect& _effect;
 
 
 public:
@@ -22,17 +22,17 @@ public:
     float down_sample_factor = 1;
 
 
-    explicit EffectPass(std::unique_ptr<Effect> effect) noexcept
-        : _effect(std::move(effect)) {}
+    explicit EffectPass(Effect& effect) noexcept
+        : _effect(effect) {}
 
 
-    void update() noexcept override { _effect->update(); }
+    void update() noexcept override { _effect.update(); }
 
 
     virtual RenderTexture apply(const Texture& texture) noexcept;
 
 
-    Effect* effect() noexcept { return _effect.get(); }
+    Effect& effect() noexcept { return _effect; }
 
 
 private:

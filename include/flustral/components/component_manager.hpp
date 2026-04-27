@@ -24,7 +24,7 @@ public:
     void update() noexcept override;
     void draw() noexcept override;
 
-    Texture draw_and_get() noexcept;
+    RenderTexture draw_and_get() noexcept;
 
 
     template <typename T>

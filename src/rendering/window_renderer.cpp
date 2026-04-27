@@ -41,15 +41,7 @@ void WindowRenderer::render_to_window() const noexcept
     BeginDrawing();
     ClearBackground(clear_color);
 
-    draw_y_inverted_contents();
+    DrawTexture(contents().texture, 0, 0, WHITE);
 
     EndDrawing();
-}
-
-
-void WindowRenderer::draw_y_inverted_contents() const noexcept
-{
-    const Texture texture = contents();
-    const Rectangle source = Rectangle{ 0, 0, texture.width, -texture.height };
-    DrawTextureRec(texture, source, {}, WHITE);
 }

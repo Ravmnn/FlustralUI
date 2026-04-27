@@ -21,8 +21,8 @@ BlurEffect::BlurEffect(
 
 void BlurEffect::update() noexcept
 {
+    texture.update();
     resolution.update();
     samples.update();
     sigma.update();
-    texture.update();
 }

@@ -30,7 +30,7 @@ void ComponentManager::draw() noexcept
 }
 
 
-Texture ComponentManager::draw_and_get() noexcept
+RenderTexture ComponentManager::draw_and_get() noexcept
 {
     draw();
     return renderer->contents();

@@ -25,11 +25,15 @@ public:
     {}
 
 
-    void update() noexcept override { SetShaderValue(shader, _id, &value, type()); }
+    void update() noexcept override { update_shader_value(); }
 
 
     int id() const noexcept { return _id; }
     int type() const noexcept;
+
+
+private:
+    void update_shader_value() const noexcept;
 };
 
 
@@ -40,3 +44,7 @@ template<> inline int EffectProperty<Vector2>::type() const noexcept { return SH
 template<> inline int EffectProperty<Vector3>::type() const noexcept { return SHADER_UNIFORM_VEC3; }
 template<> inline int EffectProperty<Vector4>::type() const noexcept { return SHADER_UNIFORM_VEC4; }
 template<> inline int EffectProperty<Texture>::type() const noexcept { return SHADER_UNIFORM_SAMPLER2D; }
+
+
+template<typename T> inline void EffectProperty<T>::update_shader_value() const noexcept { SetShaderValue(shader, _id, &value, type()); }
+template<> inline void EffectProperty<Texture>::update_shader_value() const noexcept { SetShaderValueTexture(shader, _id, value); }

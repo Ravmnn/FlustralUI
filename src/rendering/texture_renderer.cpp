@@ -27,5 +27,20 @@ void TextureRenderer::end_render() noexcept
 
 void TextureRenderer::draw_y_inverted_texture(const Texture& texture, const Vector2& position) noexcept
 {
-    DrawTextureRec(texture, { position.x, position.y, (float)texture.width, (float)-texture.height }, {}, WHITE);
+    RenderTexture inverted = invert_texture_y(texture);
+    DrawTexture(inverted.texture, position.x, position.y, WHITE);
+
+    UnloadRenderTexture(inverted);
+}
+
+
+RenderTexture TextureRenderer::invert_texture_y(const Texture& texture) noexcept
+{
+    RenderTexture render = LoadRenderTexture(texture.width, texture.height);
+
+    BeginTextureMode(render);
+    DrawTextureRec(texture, { 0, 0, (float)texture.width, (float)-texture.height }, {}, WHITE);
+    EndTextureMode();
+
+    return render;
 }

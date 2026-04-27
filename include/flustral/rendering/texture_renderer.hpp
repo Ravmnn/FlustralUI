@@ -25,8 +25,9 @@ public:
     void end_render() noexcept override;
 
 
-    Texture contents() const noexcept override { return _texture.texture; }
+    RenderTexture contents() const noexcept override { return _texture; }
 
 
     static void draw_y_inverted_texture(const Texture& texture, const Vector2& position = {}) noexcept;
+    static RenderTexture invert_texture_y(const Texture& texture) noexcept;
 };

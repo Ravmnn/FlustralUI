@@ -18,5 +18,5 @@ public:
     virtual void end_render() = 0;
 
 
-    virtual Texture contents() const noexcept = 0;
+    virtual RenderTexture contents() const noexcept = 0;
 };

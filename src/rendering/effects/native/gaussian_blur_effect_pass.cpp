@@ -4,11 +4,11 @@
 
 
 GaussianBlurEffectPass::GaussianBlurEffectPass(const int samples, const float sigma) noexcept
-    : EffectPass(nullptr), samples(samples), sigma(sigma),
+    : EffectPass(*_horizontal_blur), samples(samples), sigma(sigma),
         _horizontal_blur(new HorizontalBlurEffect(samples, sigma)),
         _vertical_blur(new VerticalBlurEffect(samples, sigma)),
-        _horizontal_blur_pass(std::unique_ptr<Effect>(_horizontal_blur)),
-        _vertical_blur_pass(std::unique_ptr<Effect>(_vertical_blur))
+        _horizontal_blur_pass(*_horizontal_blur),
+        _vertical_blur_pass(*_vertical_blur)
 {}
 
 
