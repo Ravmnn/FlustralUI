@@ -22,19 +22,33 @@ int main()
 
         SceneLayer* const background = new SceneLayer(std::make_unique<TextureRenderer>());
         SceneLayer* const foreground = new SceneLayer(std::make_unique<TextureRenderer>());
+        SceneLayer* const foreground2 = new SceneLayer(std::make_unique<TextureRenderer>());
+        SceneLayer* const foreground3 = new SceneLayer(std::make_unique<TextureRenderer>());
 
         TextureComponent* const background_texture = background->add_component<TextureComponent>(Vector2{}, Vector2{ 1920, 1080 }, background_texture_source);
-        SurfaceComponent* const rectangle = foreground->add_component<SurfaceComponent>(Vector2{ 200, 200 }, Vector2{ 150, 150 }, 15.0);
+        SurfaceComponent* const rectangle = foreground->add_component<SurfaceComponent>(Vector2{ 200, 200 }, Vector2{ 600, 500 }, 90.0);
+        SurfaceComponent* const rectangle2 = foreground2->add_component<SurfaceComponent>(Vector2{ 200, 200 }, Vector2{ 400, 400 }, 60.0);
+        SurfaceComponent* const rectangle3 = foreground3->add_component<SurfaceComponent>(Vector2{ 200, 200 }, Vector2{ 250, 250 }, 30.0);
+        rectangle->effect().tint.value = {0.97, 0.93, 0.88};
+        rectangle->effect().tint_strength.value = 2.2;
 
         Scene scene;
         scene.layers.push_back(std::unique_ptr<SceneLayer>(background));
         scene.layers.push_back(std::unique_ptr<SceneLayer>(foreground));
+        scene.layers.push_back(std::unique_ptr<SceneLayer>(foreground2));
+        scene.layers.push_back(std::unique_ptr<SceneLayer>(foreground3));
 
 
         while (!WindowShouldClose())
         {
-            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+            if (IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE))
                 rectangle->set_motion_target(GetMousePosition());
+
+            if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+                rectangle2->set_motion_target(GetMousePosition());
+
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+                rectangle3->set_motion_target(GetMousePosition());
 
             scene.update();
             scene.draw();

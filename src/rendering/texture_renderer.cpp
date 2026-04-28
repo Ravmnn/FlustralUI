@@ -4,7 +4,7 @@
 
 
 TextureRenderer::TextureRenderer(const unsigned int width, const unsigned int height) noexcept
-    : _texture(LoadRenderTexture(width, height))
+    : _render_texture(LoadRenderTexture(width, height))
 {}
 
 
@@ -12,7 +12,7 @@ TextureRenderer::TextureRenderer(const unsigned int width, const unsigned int he
 
 void TextureRenderer::begin_render() noexcept
 {
-    BeginTextureMode(_texture);
+    BeginTextureMode(_render_texture);
     ClearBackground(clear_color);
 }
 
@@ -25,22 +25,7 @@ void TextureRenderer::end_render() noexcept
 
 
 
-void TextureRenderer::draw_y_inverted_texture(const Texture& texture, const Vector2& position) noexcept
+void TextureRenderer::draw_y_inverted_texture(const Texture& texture) noexcept
 {
-    RenderTexture inverted = invert_texture_y(texture);
-    DrawTexture(inverted.texture, position.x, position.y, WHITE);
-
-    UnloadRenderTexture(inverted);
-}
-
-
-RenderTexture TextureRenderer::invert_texture_y(const Texture& texture) noexcept
-{
-    RenderTexture render = LoadRenderTexture(texture.width, texture.height);
-
-    BeginTextureMode(render);
     DrawTextureRec(texture, { 0, 0, (float)texture.width, (float)-texture.height }, {}, WHITE);
-    EndTextureMode();
-
-    return render;
 }

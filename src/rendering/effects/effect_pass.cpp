@@ -5,20 +5,15 @@
 
 
 
-RenderTexture EffectPass::apply(const Texture& texture) noexcept
+ScopedRenderTexture EffectPass::apply(const Texture& texture) noexcept
 {
-    const RenderTexture down_sampled = TextureSample::down_sample(texture, down_sample_factor);
-    const RenderTexture render_texture = LoadRenderTexture(down_sampled.texture.width, down_sampled.texture.height);
+    const ScopedRenderTexture down_sampled = TextureSample::down_sample(texture, down_sample_factor);
+    const ScopedRenderTexture render_texture(Vector2(down_sampled.size().x, down_sampled.size().y));
 
-    set_effect_target_texture_if_allowed(down_sampled.texture);
+    set_effect_target_texture_if_allowed(down_sampled);
     apply_effect_and_render_to(render_texture, down_sampled);
 
-    const RenderTexture up_sampled = TextureSample::up_sample(render_texture.texture, down_sample_factor);
-
-    UnloadRenderTexture(render_texture);
-    UnloadRenderTexture(down_sampled);
-
-    return up_sampled;
+    return TextureSample::up_sample(render_texture, down_sample_factor);
 }
 
 

@@ -24,14 +24,12 @@ void GaussianBlurEffectPass::update() noexcept
 
 
 
-RenderTexture GaussianBlurEffectPass::apply(const Texture& texture) noexcept
+ScopedRenderTexture GaussianBlurEffectPass::apply(const Texture& texture) noexcept
 {
     update();
 
-    const RenderTexture horizontal_blurred = _horizontal_blur_pass.apply(texture);
-    const RenderTexture vertical_blurred = _vertical_blur_pass.apply(horizontal_blurred.texture);
+    const ScopedRenderTexture horizontal_blurred = _horizontal_blur_pass.apply(texture);
+    ScopedRenderTexture vertical_blurred = _vertical_blur_pass.apply(horizontal_blurred);
 
-    UnloadRenderTexture(horizontal_blurred);
-
-    return vertical_blurred;
+    return ScopedRenderTexture(vertical_blurred.release());
 }

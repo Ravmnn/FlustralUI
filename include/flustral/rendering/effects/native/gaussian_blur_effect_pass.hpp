@@ -30,5 +30,5 @@ public:
     void update() noexcept override;
 
 
-    RenderTexture apply(const Texture& texture) noexcept override;
+    ScopedRenderTexture apply(const Texture& texture) noexcept override;
 };

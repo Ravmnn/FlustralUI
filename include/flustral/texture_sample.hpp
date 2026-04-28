@@ -2,12 +2,14 @@
 
 #include <raylib.h>
 
+#include <flustral/rendering/scoped_render_texture.hpp>
+
 
 
 
 class TextureSample
 {
 public:
-    static RenderTexture down_sample(const Texture& source, const float factor) noexcept;
-    static RenderTexture up_sample(const Texture& source, const float factor) noexcept;
+    static ScopedRenderTexture down_sample(const Texture& source, const float factor) noexcept;
+    static ScopedRenderTexture up_sample(const Texture& source, const float factor) noexcept;
 };

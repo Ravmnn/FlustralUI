@@ -3,7 +3,7 @@
 
 
 
-RenderTexture TextureSample::down_sample(const Texture& source, const float factor) noexcept
+ScopedRenderTexture TextureSample::down_sample(const Texture& source, const float factor) noexcept
 {
     const RenderTexture render_texture = LoadRenderTexture(source.width / factor, source.height / factor);
 
@@ -15,11 +15,11 @@ RenderTexture TextureSample::down_sample(const Texture& source, const float fact
         DrawTexturePro(source, source_rect, destination, {}, 0, WHITE);
     EndTextureMode();
 
-    return render_texture;
+    return ScopedRenderTexture(render_texture);
 }
 
 
-RenderTexture TextureSample::up_sample(const Texture& source, const float factor) noexcept
+ScopedRenderTexture TextureSample::up_sample(const Texture& source, const float factor) noexcept
 {
     return down_sample(source, 1 / factor);
 }

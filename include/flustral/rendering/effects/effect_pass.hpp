@@ -5,6 +5,7 @@
 #include <raylib.h>
 
 #include <flustral/rendering/effects/effect.hpp>
+#include <flustral/rendering/scoped_render_texture.hpp>
 
 
 
@@ -29,7 +30,7 @@ public:
     void update() noexcept override { _effect.update(); }
 
 
-    virtual RenderTexture apply(const Texture& texture) noexcept;
+    virtual ScopedRenderTexture apply(const Texture& texture) noexcept;
 
 
     Effect& effect() noexcept { return _effect; }

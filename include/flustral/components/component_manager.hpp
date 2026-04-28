@@ -6,6 +6,7 @@
 
 #include <flustral/components/component.hpp>
 #include <flustral/rendering/renderer.hpp>
+#include <flustral/rendering/scoped_render_texture.hpp>
 
 
 

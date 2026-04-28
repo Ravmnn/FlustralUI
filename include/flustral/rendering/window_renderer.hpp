@@ -22,5 +22,4 @@ public:
 
 private:
     void render_to_window() const noexcept;
-    void draw_y_inverted_contents() const noexcept;
 };
