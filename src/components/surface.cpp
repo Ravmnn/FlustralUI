@@ -2,6 +2,8 @@
 
 #include <raymath.h>
 
+#include <flustral/rendering/effects/effect_pass.hpp>
+
 
 
 
@@ -29,10 +31,19 @@ SurfaceComponent::SurfaceComponent(const Vector2& position, const Vector2& size,
 
 
 
-void SurfaceComponent::update() noexcept
+RenderTexture SurfaceComponent::render() noexcept
 {
-    Component::update();
+    update_effect_values();
 
+    _effect.background.value = rendered_layers.background.texture;
+    _effect.blurred_background.value = rendered_layers.blurred_background.texture;
+
+    return EffectPass(_effect).apply(rendered_layers.background.texture).release();
+}
+
+
+void SurfaceComponent::update_effect_values() noexcept
+{
     _effect.position.value = position / _effect.resolution.value;
     _effect.size.value = size;
     _effect.radius.value = radius;

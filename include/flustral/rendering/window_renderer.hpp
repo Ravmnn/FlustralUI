@@ -20,6 +20,6 @@ public:
     void end_render() noexcept override;
 
 
-private:
+protected:
     void render_to_window() const noexcept;
 };

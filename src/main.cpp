@@ -19,11 +19,12 @@ int main()
 
     {
         Texture background_texture_source = LoadTexture("/home/ravmn/Documentos/programming/cpp/Flustral/resources/images/background.jpg");
+        ExportImage(LoadImageFromTexture(background_texture_source), "/home/ravmn/Documentos/programming/cpp/Flustral/resources/debug/bg_source.png");
 
-        SceneLayer* const background = new SceneLayer(std::make_unique<TextureRenderer>());
-        SceneLayer* const foreground = new SceneLayer(std::make_unique<TextureRenderer>());
-        SceneLayer* const foreground2 = new SceneLayer(std::make_unique<TextureRenderer>());
-        SceneLayer* const foreground3 = new SceneLayer(std::make_unique<TextureRenderer>());
+        SceneLayer* const background = new SceneLayer;
+        SceneLayer* const foreground = new SceneLayer;
+        SceneLayer* const foreground2 = new SceneLayer;
+        SceneLayer* const foreground3 = new SceneLayer;
 
         TextureComponent* const background_texture = background->add_component<TextureComponent>(Vector2{}, Vector2{ 1920, 1080 }, background_texture_source);
         SurfaceComponent* const rectangle = foreground->add_component<SurfaceComponent>(Vector2{ 200, 200 }, Vector2{ 600, 500 }, 90.0);
@@ -50,8 +51,8 @@ int main()
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
                 rectangle3->set_motion_target(GetMousePosition());
 
-            scene.update();
-            scene.draw();
+            scene.update_all();
+            scene.draw_all();
         }
     }
 

@@ -5,8 +5,6 @@
 #include <concepts>
 
 #include <flustral/components/component.hpp>
-#include <flustral/rendering/renderer.hpp>
-#include <flustral/rendering/scoped_render_texture.hpp>
 
 
 
@@ -15,17 +13,13 @@ class ComponentManager : public Updateable, public Drawable
 {
 public:
     std::vector<std::unique_ptr<Component>> components;
-    std::unique_ptr<Renderer> renderer;
 
 
-    explicit ComponentManager(std::unique_ptr<Renderer> renderer) noexcept;
     virtual ~ComponentManager() = default;
 
 
     void update() noexcept override;
     void draw() noexcept override;
-
-    RenderTexture draw_and_get() noexcept;
 
 
     template <typename T>
