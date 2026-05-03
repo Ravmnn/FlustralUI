@@ -4,9 +4,9 @@ subdir('rendering')
 
 
 
-sources = files('main.cpp', 'spring.cpp', 'scene.cpp', 'texture_sample.cpp')
+sources = files('spring.cpp', 'scene.cpp', 'texture_sample.cpp')
 
-executable('flustral', sources,
+static_library('flustral', sources,
     dependencies: global_deps,
     link_with: [components_lib, rendering_lib]
 )

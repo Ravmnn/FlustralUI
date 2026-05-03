@@ -16,7 +16,7 @@ project_dep = declare_dependency(
 
 
 raylib_dep = dependency('raylib',
-    required: false,
+    required: true,
     fallback: ['raylib', 'raylib_dep']
 )
 
