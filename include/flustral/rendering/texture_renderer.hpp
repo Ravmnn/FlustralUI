@@ -1,6 +1,7 @@
 #pragma once
 
 #include <raylib.h>
+#include <rlgl.h>
 
 #include <flustral/rendering/renderer.hpp>
 #include <flustral/rendering/scoped_render_texture.hpp>
@@ -18,16 +19,19 @@ public:
     TextureRenderer() noexcept
         : TextureRenderer(GetScreenWidth(), GetScreenHeight()) {}
 
-    explicit TextureRenderer(const unsigned int width, const unsigned int height) noexcept;
-    virtual ~TextureRenderer() = default;
-
     explicit TextureRenderer(const Vector2& size) noexcept
         : TextureRenderer(size.x, size.y) {}
 
+    TextureRenderer(const unsigned int width, const unsigned int height) noexcept
+        : _render_texture(LoadRenderTexture(width, height))
+    {}
 
 
     void begin_render() noexcept override;
     void end_render() noexcept override;
+
+
+    void generate_mipmaps() noexcept { GenTextureMipmaps(&_render_texture.texture()); }
 
 
     RenderTexture contents() const noexcept override { return _render_texture; }

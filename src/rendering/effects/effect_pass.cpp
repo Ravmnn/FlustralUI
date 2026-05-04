@@ -30,11 +30,13 @@ void EffectPass::set_effect_target_texture_if_allowed(const Texture& source) noe
 void EffectPass::apply_effect_and_render_to(const RenderTexture& render_texture, const RenderTexture& source) noexcept
 {
     BeginTextureMode(render_texture);
-        BeginShaderMode(*_effect.shader());
+        _effect.enable(set_effect_target_texture_when_apply ? std::make_optional(source.texture) : std::nullopt);
         _effect.update();
 
-            DrawTexture(source.texture, 0, 0, WHITE);
 
-        EndShaderMode();
+        DrawTexture(source.texture, 0, 0, WHITE);
+
+
+        _effect.disable();
     EndTextureMode();
 }

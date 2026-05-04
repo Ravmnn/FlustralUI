@@ -51,7 +51,10 @@ public:
 
 
     const RenderTexture& render_texture() const noexcept { return _render_texture.value(); }
+    RenderTexture& render_texture() noexcept { return _render_texture.value(); }
+
     const Texture& texture() const noexcept { return _render_texture.value().texture; }
+    Texture& texture() noexcept { return _render_texture.value().texture; }
 
 
     Vector2 size() const noexcept { return { texture().width, texture().height }; }

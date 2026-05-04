@@ -21,7 +21,7 @@ public:
     virtual RenderTexture contents() const noexcept = 0;
 
 
-    Vector2 resolution() const noexcept
+    virtual Vector2 resolution() const noexcept
     {
         const RenderTexture render_texture = contents();
         const Vector2 resolution = { render_texture.texture.width, render_texture.texture.height };

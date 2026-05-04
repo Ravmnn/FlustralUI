@@ -13,13 +13,18 @@ public:
     bool use_buffer_texture = true;
 
 
-    WindowRenderer();
+    WindowRenderer() : TextureRenderer(GetScreenWidth(), GetScreenHeight()) {}
 
 
     void begin_render() noexcept override;
     void end_render() noexcept override;
 
 
+    // TODO: detect window resizing and update buffer texture size
+
+    Vector2 resolution() const noexcept override { return { GetScreenWidth(), GetScreenHeight() }; }
+
+
 protected:
-    void render_to_window() const noexcept;
+    void render_buffer_to_window() const noexcept;
 };

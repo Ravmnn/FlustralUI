@@ -33,6 +33,8 @@ SurfaceComponent::SurfaceComponent(const Vector2& position, const Vector2& size,
 
 RenderTexture SurfaceComponent::render() noexcept
 {
+    // TODO: the output texture is ownership of the object, not the caller, cache it
+
     update_effect_values();
 
     _effect.background.value = rendered_layers.background.texture;

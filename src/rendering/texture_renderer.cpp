@@ -3,13 +3,6 @@
 
 
 
-TextureRenderer::TextureRenderer(const unsigned int width, const unsigned int height) noexcept
-    : _render_texture(LoadRenderTexture(width, height))
-{}
-
-
-
-
 void TextureRenderer::begin_render() noexcept
 {
     BeginTextureMode(_render_texture);

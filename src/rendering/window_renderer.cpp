@@ -3,13 +3,6 @@
 
 
 
-WindowRenderer::WindowRenderer()
-    : TextureRenderer(GetScreenWidth(), GetScreenHeight())
-{}
-
-
-
-
 void WindowRenderer::begin_render() noexcept
 {
     if (use_buffer_texture)
@@ -32,16 +25,16 @@ void WindowRenderer::end_render() noexcept
     }
 
     TextureRenderer::end_render();
-    render_to_window();
+    render_buffer_to_window();
 }
 
 
-void WindowRenderer::render_to_window() const noexcept
+void WindowRenderer::render_buffer_to_window() const noexcept
 {
     BeginDrawing();
     ClearBackground(clear_color);
 
-    DrawTexture(contents().texture, 0, 0, WHITE);
+    draw_y_inverted_texture(contents().texture);
 
     EndDrawing();
 }
