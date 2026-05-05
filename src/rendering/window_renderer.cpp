@@ -11,6 +11,8 @@ void WindowRenderer::begin_render() noexcept
         return;
     }
 
+    Renderer::begin_render();
+
     BeginDrawing();
     ClearBackground(clear_color);
 }
@@ -20,6 +22,8 @@ void WindowRenderer::end_render() noexcept
 {
     if (!use_buffer_texture)
     {
+        Renderer::end_render();
+
         EndDrawing();
         return;
     }

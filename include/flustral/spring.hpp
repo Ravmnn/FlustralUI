@@ -1,5 +1,7 @@
 #pragma once
 
+#include <concepts>
+
 #include <raylib.h>
 
 #include <flustral/updateable.hpp>
@@ -7,29 +9,51 @@
 
 
 
+template <typename T> concept Arithmetic = requires(T a, T b) {
+    { a + b } -> std::convertible_to<T>;
+    { a - b } -> std::convertible_to<T>;
+    { a * b } -> std::convertible_to<T>;
+    { a / b } -> std::convertible_to<T>;
+};
+
+
+template <typename T> requires Arithmetic<T>
 class Spring : public Updateable
 {
-private:
-    Vector2 _target;
-    Vector2 _velocity;
-
-
 public:
-    Vector2 position;
+    T current, target;
+    T velocity;
 
-    float speed;
     float damping;
+    float speed;
 
 
-    Spring(const Vector2& position, const float speed, const float damping) noexcept;
+    Spring(const T& current, const T& target, const float damping, const float speed) noexcept
+        : current(current), target(target), damping(damping), speed(speed) {}
 
 
-    void update() noexcept override;
+    operator T() const noexcept { return current; }
+
+    T operator =(const T& value) noexcept { return target = value; }
 
 
-    void set_motion_target(const Vector2& position) noexcept { _target = position; }
+    void update() noexcept override
+    {
+        const float dt = GetFrameTime();
 
+        const float omega = speed;
+        const float zeta = damping;
 
-private:
-    void update_spring_motion() noexcept;
+        const float omega_squared = omega * omega;
+        const float dt_omega_squared = dt * omega_squared;
+        const float dt2_omega_squared = dt * dt_omega_squared;
+        const float f = 1.0f + 2.0f * dt * omega * zeta;
+        const float inverse_determinant = 1.0f / (f + dt2_omega_squared);
+
+        const T new_value = (current * f + velocity * dt + target * dt2_omega_squared) * inverse_determinant;
+        const T new_velocity = (velocity + (target - current) * dt_omega_squared) * inverse_determinant;
+
+        current = new_value;
+        velocity = new_velocity;
+    }
 };

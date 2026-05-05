@@ -46,7 +46,7 @@ RenderTexture SurfaceComponent::render() noexcept
 
 void SurfaceComponent::update_effect_values() noexcept
 {
-    _effect.position.value = position / _effect.resolution.value;
+    _effect.position.value = position() / _effect.resolution.value;
     _effect.size.value = size;
     _effect.radius.value = radius;
 }

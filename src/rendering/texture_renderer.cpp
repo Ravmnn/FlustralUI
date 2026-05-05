@@ -5,6 +5,8 @@
 
 void TextureRenderer::begin_render() noexcept
 {
+    Renderer::begin_render();
+
     BeginTextureMode(_render_texture);
     ClearBackground(clear_color);
 }
@@ -12,6 +14,8 @@ void TextureRenderer::begin_render() noexcept
 
 void TextureRenderer::end_render() noexcept
 {
+    Renderer::end_render();
+
     EndTextureMode();
 }
 

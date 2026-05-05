@@ -2,20 +2,25 @@
 
 #include <raylib.h>
 
+#include <flustral/activatable.hpp>
 
 
 
-class Renderer
+
+class Renderer : Activatable
 {
 public:
     Color clear_color = BLACK;
 
 
+    using Activatable::active;
+
+
     virtual ~Renderer() = default;
 
 
-    virtual void begin_render() = 0;
-    virtual void end_render() = 0;
+    virtual void begin_render() { enable(); };
+    virtual void end_render() { disable(); };
 
 
     virtual RenderTexture contents() const noexcept = 0;

@@ -41,7 +41,7 @@ public:
 
 
     SurfaceEffect& effect() noexcept { return _effect; }
-    Rectangle geometry() const noexcept { return Rectangle { .x = position.x, .y = position.y, .width = size.x, .height = size.y }; }
+    Rectangle geometry() const noexcept { return Rectangle { .x = position().x, .y = position().y, .width = size.x, .height = size.y }; }
 
 
 private:

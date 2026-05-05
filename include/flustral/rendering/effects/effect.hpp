@@ -6,11 +6,12 @@
 #include <raylib.h>
 
 #include <flustral/updateable.hpp>
+#include <flustral/activatable.hpp>
 
 
 
 
-class Effect : public Updateable
+class Effect : public Activatable, public Updateable
 {
 private:
     std::unique_ptr<Shader> _shader;
@@ -22,7 +23,9 @@ public:
 
 
     void enable(const std::optional<Texture>& texture) noexcept;
-    void disable() const noexcept;
+
+    void enable() noexcept override;
+    void disable() noexcept override;
 
 
     Shader* shader() const noexcept { return _shader.get(); };
