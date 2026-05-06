@@ -19,7 +19,7 @@ void Effect::enable(const std::optional<Texture>& texture) noexcept
 void Effect::enable() noexcept
 {
     Activatable::enable();
-    BeginShaderMode(*_shader);
+    BeginShaderMode(*shader_);
 }
 
 

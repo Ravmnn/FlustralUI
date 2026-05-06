@@ -12,8 +12,6 @@
 
 class EffectPass : public Updateable
 {
-// TODO: use "field_" project wide
-
 protected:
     Effect& effect_;
 
