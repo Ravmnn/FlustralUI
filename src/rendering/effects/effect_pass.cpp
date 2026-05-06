@@ -22,21 +22,21 @@ void EffectPass::set_effect_target_texture_if_allowed(const Texture& source) noe
     if (!set_effect_target_texture_when_apply)
         return;
 
-    *_effect.target_texture() = source;
-    *_effect.target_texture_resolution() = { (float)source.width, (float)source.height };
+    *effect_.target_texture() = source;
+    *effect_.target_texture_resolution() = { (float)source.width, (float)source.height };
 }
 
 
 void EffectPass::apply_effect_and_render_to(const RenderTexture& render_texture, const RenderTexture& source) noexcept
 {
     BeginTextureMode(render_texture);
-        _effect.enable(set_effect_target_texture_when_apply ? std::make_optional(source.texture) : std::nullopt);
-        _effect.update();
+        effect_.enable(set_effect_target_texture_when_apply ? std::make_optional(source.texture) : std::nullopt);
+        effect_.update();
 
 
         DrawTexture(source.texture, 0, 0, WHITE);
 
 
-        _effect.disable();
+        effect_.disable();
     EndTextureMode();
 }

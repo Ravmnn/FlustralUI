@@ -14,12 +14,12 @@
 class Effect : public Activatable, public Updateable
 {
 private:
-    std::unique_ptr<Shader> _shader;
+    std::unique_ptr<Shader> shader_;
 
 
 public:
-    explicit Effect(std::unique_ptr<Shader> shader) : _shader(std::move(shader)) {}
-    virtual ~Effect() { UnloadShader(*_shader); }
+    explicit Effect(std::unique_ptr<Shader> shader) : shader_(std::move(shader)) {}
+    virtual ~Effect() { UnloadShader(*shader_); }
 
 
     void enable(const std::optional<Texture>& texture) noexcept;
@@ -28,7 +28,7 @@ public:
     void disable() noexcept override;
 
 
-    Shader* shader() const noexcept { return _shader.get(); };
+    Shader* shader() const noexcept { return shader_.get(); };
 
 
     virtual Texture* target_texture() noexcept = 0;

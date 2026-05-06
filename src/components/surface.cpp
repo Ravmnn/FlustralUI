@@ -9,7 +9,7 @@
 
 SurfaceComponent::SurfaceComponent(const Vector2& position, const Vector2& size, const float radius) noexcept
     : Component(position), size(size), radius(radius),
-        _effect(
+        effect_(
             Vector2{ (float)GetScreenWidth(), (float)GetScreenHeight() },
             position,
             size,
@@ -37,16 +37,16 @@ RenderTexture SurfaceComponent::render() noexcept
 
     update_effect_values();
 
-    _effect.background.value = rendered_layers.background.texture;
-    _effect.blurred_background.value = rendered_layers.blurred_background.texture;
+    effect_.background.value = rendered_layers.background.texture;
+    effect_.blurred_background.value = rendered_layers.blurred_background.texture;
 
-    return EffectPass(_effect).apply(rendered_layers.background.texture).release();
+    return EffectPass(effect_).apply(rendered_layers.background.texture).release();
 }
 
 
 void SurfaceComponent::update_effect_values() noexcept
 {
-    _effect.position.value = position() / _effect.resolution.value;
-    _effect.size.value = size;
-    _effect.radius.value = radius;
+    effect_.position.value = position() / effect_.resolution.value;
+    effect_.size.value = size;
+    effect_.radius.value = radius;
 }

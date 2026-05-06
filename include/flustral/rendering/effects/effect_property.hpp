@@ -11,7 +11,7 @@ template <typename T>
 class EffectProperty : Updateable
 {
 private:
-    const int _id;
+    const int id_;
 
 
 public:
@@ -21,14 +21,14 @@ public:
 
 
     EffectProperty(const Shader& shader, const char* const name, const T& value)
-        : _id(GetShaderLocation(shader, name)), shader(shader), name(name), value(value)
+        : id_(GetShaderLocation(shader, name)), shader(shader), name(name), value(value)
     {}
 
 
     void update() noexcept override { update_shader_value(); }
 
 
-    int id() const noexcept { return _id; }
+    int id() const noexcept { return id_; }
     int type() const noexcept;
 
 
@@ -46,5 +46,5 @@ template<> inline int EffectProperty<Vector4>::type() const noexcept { return SH
 template<> inline int EffectProperty<Texture>::type() const noexcept { return SHADER_UNIFORM_SAMPLER2D; }
 
 
-template<typename T> inline void EffectProperty<T>::update_shader_value() const noexcept { SetShaderValue(shader, _id, &value, type()); }
-template<> inline void EffectProperty<Texture>::update_shader_value() const noexcept { SetShaderValueTexture(shader, _id, value); }
+template<typename T> inline void EffectProperty<T>::update_shader_value() const noexcept { SetShaderValue(shader, id_, &value, type()); }
+template<> inline void EffectProperty<Texture>::update_shader_value() const noexcept { SetShaderValueTexture(shader, id_, value); }

@@ -23,7 +23,7 @@ struct RenderedLayers
 class SurfaceComponent : public Component, public Renderizable
 {
 protected:
-    SurfaceEffect _effect;
+    SurfaceEffect effect_;
 
 
 public:
@@ -40,7 +40,7 @@ public:
     RenderTexture render() noexcept override;
 
 
-    SurfaceEffect& effect() noexcept { return _effect; }
+    SurfaceEffect& effect() noexcept { return effect_; }
     Rectangle geometry() const noexcept { return Rectangle { .x = position().x, .y = position().y, .width = size.x, .height = size.y }; }
 
 

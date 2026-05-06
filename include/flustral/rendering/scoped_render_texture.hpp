@@ -11,7 +11,7 @@
 class ScopedRenderTexture
 {
 private:
-    std::optional<RenderTexture> _render_texture;
+    std::optional<RenderTexture> render_texture_;
 
 
 public:
@@ -23,7 +23,7 @@ public:
         : ScopedRenderTexture(LoadRenderTexture(size.x, size.y)) {}
 
     explicit ScopedRenderTexture(const RenderTexture& render_texture) noexcept
-        : _render_texture(render_texture) { }
+        : render_texture_(render_texture) { }
 
 
     explicit ScopedRenderTexture(ScopedRenderTexture&& other) noexcept { own(other); }
@@ -41,8 +41,8 @@ public:
 
     ~ScopedRenderTexture() noexcept
     {
-        if (_render_texture)
-            UnloadRenderTexture(_render_texture.value());
+        if (render_texture_)
+            UnloadRenderTexture(render_texture_.value());
     }
 
 
@@ -50,11 +50,11 @@ public:
     operator Texture() const noexcept { return texture(); }
 
 
-    const RenderTexture& render_texture() const noexcept { return _render_texture.value(); }
-    RenderTexture& render_texture() noexcept { return _render_texture.value(); }
+    const RenderTexture& render_texture() const noexcept { return render_texture_.value(); }
+    RenderTexture& render_texture() noexcept { return render_texture_.value(); }
 
-    const Texture& texture() const noexcept { return _render_texture.value().texture; }
-    Texture& texture() noexcept { return _render_texture.value().texture; }
+    const Texture& texture() const noexcept { return render_texture_.value().texture; }
+    Texture& texture() noexcept { return render_texture_.value().texture; }
 
 
     Vector2 size() const noexcept { return { texture().width, texture().height }; }
@@ -62,8 +62,8 @@ public:
 
     RenderTexture release() noexcept
     {
-        RenderTexture buffer = _render_texture.value();
-        _render_texture.reset();
+        RenderTexture buffer = render_texture_.value();
+        render_texture_.reset();
 
         return buffer;
     }
@@ -72,7 +72,7 @@ public:
 private:
     void own(ScopedRenderTexture& other) noexcept
     {
-        _render_texture = other._render_texture;
-        other._render_texture.reset();
+        render_texture_ = other.render_texture_;
+        other.render_texture_.reset();
     }
 };

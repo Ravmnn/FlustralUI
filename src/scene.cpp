@@ -8,10 +8,10 @@
 
 
 Scene::Scene() noexcept
-    : _blur_pass(2, 1)
+    : blur_pass_(2, 1)
 {
-    _blur_pass.down_sample_factor = 6;
-    _renderer.use_buffer_texture = false;
+    blur_pass_.down_sample_factor = 6;
+    renderer_.use_buffer_texture = false;
 }
 
 
@@ -33,7 +33,7 @@ void Scene::draw_all() noexcept
     if (layers.empty())
         return;
 
-    add_to_unload_list(_rendered_layers.background = get_first_layer_texture());
+    add_to_unload_list(rendered_layers_.background = get_first_layer_texture());
     draw_layers();
 
     draw_final_texture_to_window();
@@ -44,7 +44,7 @@ void Scene::draw_all() noexcept
 
 RenderTexture Scene::get_first_layer_texture() noexcept
 {
-    TextureRenderer renderer(_renderer.resolution());
+    TextureRenderer renderer(renderer_.resolution());
 
     renderer.begin_render();
     layers.front()->draw();
@@ -69,34 +69,34 @@ void Scene::draw_components(const SceneLayer& layer) noexcept
     for (auto& component : layer.components)
     {
         SurfaceComponent* surface = dynamic_cast<SurfaceComponent*>(component.get());
-        surface->rendered_layers = _rendered_layers;
+        surface->rendered_layers = rendered_layers_;
 
-        _rendered_layers.background = surface->render();
-        add_to_unload_list(_rendered_layers.background);
+        rendered_layers_.background = surface->render();
+        add_to_unload_list(rendered_layers_.background);
     }
 }
 
 
 void Scene::update_blurred_background() noexcept
 {
-    const RenderTexture blurred_background = _blur_pass.apply(_rendered_layers.background.texture).release();
-    _rendered_layers.blurred_background = blurred_background;
+    const RenderTexture blurred_background = blur_pass_.apply(rendered_layers_.background.texture).release();
+    rendered_layers_.blurred_background = blurred_background;
     add_to_unload_list(blurred_background);
 }
 
 
 void Scene::draw_final_texture_to_window() noexcept
 {
-    _renderer.begin_render();
-    _renderer.draw_y_inverted_texture(_rendered_layers.background.texture);
-    _renderer.end_render();
+    renderer_.begin_render();
+    renderer_.draw_y_inverted_texture(rendered_layers_.background.texture);
+    renderer_.end_render();
 }
 
 
 void Scene::unload_loaded_textures() noexcept
 {
-    for (const auto& texture : _unload_list)
+    for (const auto& texture : unload_list_)
         UnloadRenderTexture(texture);
 
-    _unload_list.clear();
+    unload_list_.clear();
 }

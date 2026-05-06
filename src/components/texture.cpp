@@ -4,7 +4,7 @@
 
 
 TextureComponent::TextureComponent(const Vector2& position, const Vector2& size, const Texture& texture) noexcept
-    : Component(position), size(size), _texture(texture)
+    : Component(position), size(size), texture_(texture)
 {}
 
 
@@ -12,5 +12,5 @@ TextureComponent::TextureComponent(const Vector2& position, const Vector2& size,
 
 void TextureComponent::draw() noexcept
 {
-    DrawTexturePro(_texture, { 0, 0, (float)_texture.width, (float)_texture.height }, { position().x, position().y, size.x, size.y }, {}, 0, tint);
+    DrawTexturePro(texture_, { 0, 0, (float)texture_.width, (float)texture_.height }, { position().x, position().y, size.x, size.y }, {}, 0, tint);
 }

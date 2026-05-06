@@ -10,11 +10,11 @@
 class GaussianBlurEffectPass : EffectPass
 {
 private:
-    HorizontalBlurEffect* _horizontal_blur;
-    VerticalBlurEffect* _vertical_blur;
+    HorizontalBlurEffect* horizontal_blur_;
+    VerticalBlurEffect* vertical_blur_;
 
-    EffectPass _horizontal_blur_pass;
-    EffectPass _vertical_blur_pass;
+    EffectPass horizontal_blur_pass_;
+    EffectPass vertical_blur_pass_;
 
 
 public:

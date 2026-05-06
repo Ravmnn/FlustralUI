@@ -7,7 +7,7 @@ void TextureRenderer::begin_render() noexcept
 {
     Renderer::begin_render();
 
-    BeginTextureMode(_render_texture);
+    BeginTextureMode(render_texture_);
     ClearBackground(clear_color);
 }
 

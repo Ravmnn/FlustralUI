@@ -8,7 +8,7 @@
 class TextureComponent : public Component
 {
 private:
-    Texture _texture;
+    Texture texture_;
 
 
 public:
@@ -17,11 +17,11 @@ public:
 
 
     TextureComponent(const Vector2& position, const Vector2& size, const Texture& texture) noexcept;
-    virtual ~TextureComponent() { UnloadTexture(_texture); }
+    virtual ~TextureComponent() { UnloadTexture(texture_); }
 
 
     void draw() noexcept override;
 
 
-    const Texture& texture() const noexcept { return _texture; }
+    const Texture& texture() const noexcept { return texture_; }
 };

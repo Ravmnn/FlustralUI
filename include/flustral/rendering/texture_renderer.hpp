@@ -12,7 +12,7 @@
 class TextureRenderer : public Renderer
 {
 protected:
-    ScopedRenderTexture _render_texture;
+    ScopedRenderTexture render_texture_;
 
 
 public:
@@ -23,7 +23,7 @@ public:
         : TextureRenderer(size.x, size.y) {}
 
     TextureRenderer(const unsigned int width, const unsigned int height) noexcept
-        : _render_texture(LoadRenderTexture(width, height))
+        : render_texture_(LoadRenderTexture(width, height))
     {}
 
 
@@ -31,11 +31,11 @@ public:
     void end_render() noexcept override;
 
 
-    void generate_mipmaps() noexcept { GenTextureMipmaps(&_render_texture.texture()); }
+    void generate_mipmaps() noexcept { GenTextureMipmaps(&render_texture_.texture()); }
 
 
-    RenderTexture contents() const noexcept override { return _render_texture; }
-    RenderTexture release_contents() noexcept { return _render_texture.release(); }
+    RenderTexture contents() const noexcept override { return render_texture_; }
+    RenderTexture release_contents() noexcept { return render_texture_.release(); }
 
 
     static void draw_y_inverted_texture(const Texture& texture) noexcept;

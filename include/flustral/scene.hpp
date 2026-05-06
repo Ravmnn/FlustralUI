@@ -13,12 +13,12 @@
 class Scene
 {
 private:
-    GaussianBlurEffectPass _blur_pass;
+    GaussianBlurEffectPass blur_pass_;
 
-    WindowRenderer _renderer;
-    RenderedLayers _rendered_layers;
+    WindowRenderer renderer_;
+    RenderedLayers rendered_layers_;
 
-    std::vector<RenderTexture> _unload_list;
+    std::vector<RenderTexture> unload_list_;
 
 
 public:
@@ -42,5 +42,5 @@ private:
     void draw_final_texture_to_window() noexcept;
 
     void unload_loaded_textures() noexcept;
-    void add_to_unload_list(const RenderTexture& texture) noexcept { _unload_list.push_back(texture); }
+    void add_to_unload_list(const RenderTexture& texture) noexcept { unload_list_.push_back(texture); }
 };

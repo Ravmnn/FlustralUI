@@ -15,7 +15,7 @@ class EffectPass : public Updateable
 // TODO: use "field_" project wide
 
 protected:
-    Effect& _effect;
+    Effect& effect_;
 
 
 public:
@@ -24,16 +24,16 @@ public:
 
 
     explicit EffectPass(Effect& effect) noexcept
-        : _effect(effect) {}
+        : effect_(effect) {}
 
 
-    void update() noexcept override { _effect.update(); }
+    void update() noexcept override { effect_.update(); }
 
 
     virtual ScopedRenderTexture apply(const Texture& texture) noexcept;
 
 
-    Effect& effect() noexcept { return _effect; }
+    Effect& effect() noexcept { return effect_; }
 
 
 private:
