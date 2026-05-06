@@ -10,7 +10,7 @@
 class Renderer : Activatable
 {
 public:
-    Color clear_color = BLACK;
+    Color clear_color = BLANK;
 
 
     using Activatable::active;

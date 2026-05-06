@@ -13,7 +13,7 @@ public:
     bool use_buffer_texture = true;
 
 
-    WindowRenderer() : TextureRenderer(GetScreenWidth(), GetScreenHeight()) {}
+    WindowRenderer() : TextureRenderer(GetScreenWidth(), GetScreenHeight()) { clear_color = BLACK; }
 
 
     void begin_render() noexcept override;

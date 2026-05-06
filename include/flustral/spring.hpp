@@ -1,6 +1,8 @@
 #pragma once
 
 #include <concepts>
+#include <optional>
+#include <algorithm>
 
 #include <raylib.h>
 
@@ -22,7 +24,9 @@ class Spring : public Updateable
 {
 public:
     T current, target;
-    T velocity;
+    T velocity = {};
+
+    std::optional<T> max, min;
 
     float damping;
     float speed;
@@ -55,5 +59,17 @@ public:
 
         current = new_value;
         velocity = new_velocity;
+
+        clamp_current();
+    }
+
+
+    void clamp_current() noexcept
+    {
+        if (min.has_value())
+            current = std::max(current, *min);
+
+        if (max.has_value())
+            current = std::min(current, *max);
     }
 };

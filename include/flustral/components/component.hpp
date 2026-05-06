@@ -1,10 +1,10 @@
 #pragma once
 
 #include <raylib.h>
-#include <raymath.h>
 
 #include <flustral/spring.hpp>
 #include <flustral/drawable.hpp>
+#include <flustral/vector.hpp>
 
 
 
